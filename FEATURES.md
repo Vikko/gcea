@@ -31,11 +31,11 @@ health stats, etc.
 - 5.4 Declare & display victory
 
 ##Todo
-- [ ] Setup main template (1.1, 2.1, 5.1, 5.4)
-- [ ] Create menu buttons (1.1, 1.2)
-- [ ] Setup DB (SQLite?) (2.1)
-- [ ] Add pokemon to DB (2.1)
-- [ ] Load pokemon from DB (2.1, 2.2, 3.1, 3.2, 4.2)
+- [x] Setup main template (1.1, 2.1, 5.1, 5.4)
+- [x] Create menu buttons (1.1, 1.2)
+- [x] Setup DB (SQLite?) (2.1)
+- [x] Add pokemon to DB (2.1)
+- [x] Load pokemon from DB (2.1, 2.2, 3.1, 3.2, 4.2)
 - [ ] Pick pokemon template (2.2, 3.1, 3.2)
 - [ ] Fight layout (5.1)
 - [ ] Fight status report (5.1)

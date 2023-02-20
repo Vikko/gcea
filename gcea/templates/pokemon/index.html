@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    {% if pokemons %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Hitpoints</th>
+                    <th scope="col">Attack</th>
+                    <th scope="col">Defense</th>
+                    <th scope="col">Speed</th>
+                    <th/>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pokemon in pokemons %}
+                    <tr>
+                        <th scope="row">{{ pokemon.id }}</th>
+                        <td>{{ pokemon.name }}</td>
+                        <td>{{ pokemon.hp }}</td>
+                        <td>{{ pokemon.attack }}</td>
+                        <td>{{ pokemon.defence }}</td>
+                        <td>{{ pokemon.speed }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_pokemon', pokemon_id=pokemon.id) }}" method="POST">
+                               <button type="submit" class="btn btn-transparent">
+                                   <i class="fa-sharp fa-solid fa-xmark text-danger"></i>
+                               </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <span>No pokemon were found!</span>
+    {% endif %}
+    <div class="m-4 w-auto">
+        <a class="btn btn-info btn-outline-light" href="{{ url_for('add_pokemon') }}" role="button">Add new Pokemon</a>
+    </div>
+{% endblock %}
