@@ -3,7 +3,7 @@
 """
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField
+from wtforms import StringField, IntegerField, SubmitField, RadioField, BooleanField
 from wtforms.validators import DataRequired, Length, NumberRange, ValidationError
 from gcea.models import Pokemon
 
@@ -25,3 +25,8 @@ class PostPokemonForm(FlaskForm):
         pokemon = Pokemon.query.filter_by(name=name.data).first()
         if pokemon:
             raise ValidationError('A pokemon with that name is already in the database.')
+
+class PickPokemonForm(FlaskForm):
+    pick = RadioField('Pick your pokemon', coerce=int, validators=[DataRequired()])
+    set_main = BooleanField('Set as default pokemon', default=False)
+    submit = SubmitField("Change pokemon")

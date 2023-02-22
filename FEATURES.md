@@ -26,7 +26,7 @@ health stats, etc.
 - 4.2 Pick opponent
 - 4.3 Determine order
 - 5.1 Fight screen
-- 5.2 Pick battle action: Fight, Special, Defend, Swap pokemon
+- 5.2 Pick battle action: Fight, Swap pokemon, (Optional) Special, Defend
 - 5.3 Process battle results
 - 5.4 Declare & display victory
 
@@ -36,14 +36,15 @@ health stats, etc.
 - [x] Setup DB (SQLite?) (2.1)
 - [x] Add pokemon to DB (2.1)
 - [x] Load pokemon from DB (2.1, 2.2, 3.1, 3.2, 4.2)
-- [ ] Pick pokemon template (2.2, 3.1, 3.2)
-- [ ] Fight layout (5.1)
-- [ ] Fight status report (5.1)
+- [x] Pick pokemon template (2.2, 3.1, 3.2)
+- [x] Fight layout (5.1)
+- [x] Fight status report (5.1)
 - [ ] Fight actions (5.1)
-- [ ] Game engine: Session storage (2.2, 3.1, 3.2, 4.1, 4.2, 5.2)
-- [ ] Game engine: Fight mechanics (4.1, 5.2, 5.3, 5.4)
+- [x] Game engine: Session storage (2.2, 3.1, 3.2, 4.1, 4.2, 5.2)
+- [x] Game engine: Fight mechanics (4.1, 5.2, 5.3, 5.4)
 - [ ] Battle results template (5.4)
 - [ ] \(Optional) Battle music! (5.1)
 - [ ] \(Optional) Battle statistics (5.3, 5.4)
 - [ ] \(Optional) Element mechanics (5.3)
+- [ ] \(Optional) Different attacks (5.3)
 - [ ] \(Future feature) Opponent AI 

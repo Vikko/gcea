@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ url_for('index') }}">Menu</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ url_for('pokemon') }}">Swap</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ url_for('pick_pokemon') }}">Swap</a></li>
                 </ul>
             </div>
         </div>
@@ -37,15 +37,12 @@
                 {% endif %}
             {% endwith %}
             {% if content_header %}
-                <!-- Portfolio Section Heading-->
+                <!-- Header-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">
                     {{ content_header }}
                 </h2>
             {% endif %}
-            <!-- Portfolio Grid Items-->
-            <div class="row justify-content-center">
-                {% block content %}{% endblock %}
-            </div>
+            {% block content %}{% endblock %}
         </div>
     </section>
     {% block action_buttons %}

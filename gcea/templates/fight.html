@@ -1,5 +1,31 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    Battle stuff
+    <legend class="border-bottom mb-4">{{ legend }}</legend>
+    <table id="battle" class="table table-hover">
+        <thead>
+            <tr class="row">
+                <th class="col-1" scope="col"/>
+                <th class="col-5" scope="col">{{ stats.current_name }}</th>
+                <th class="col-1" scope="col"/>
+                <th class="col-5" scope="col">{{ stats.opponent_name }}</th>
+            </tr>
+            <tr class="row">
+                <td class="col-1"/>
+                <td class="col-5"><div class="stats">HP: {{ stats.current_hp[0]}}/{{ stats.current_hp[1] }} ATK: {{ stats.current_ADS[0] }} DEF: {{ stats.current_ADS[1] }} SPD: {{ stats.current_ADS[2] }}</div></td>
+                <td class="col-1"/>
+                <td class="col-5"><div class="stats">HP: {{ stats.opponent_hp[0]}}/{{ stats.opponent_hp[1] }} ATK: {{ stats.opponent_ADS[0] }} DEF: {{ stats.opponent_ADS[1] }} SPD: {{ stats.opponent_ADS[2] }}</div></td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr class="row">
+                <td class="col-1 text-end"><div>{{ event[0] }}</div></td>
+                <td class="col-5"><div>{{ event[1] }}</div></td>
+                <td class="col-1 text-end"><div>{{ event[0] }}</div></td>
+                <td class="col-5"><div>{{ event[2] }}</div></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

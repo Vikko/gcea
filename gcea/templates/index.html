@@ -2,13 +2,21 @@
 
 {% block content %}
     <div class="m-4 w-auto">
-        <a class="btn btn-xl btn-info btn-outline-light" href="/fight">
+        <a class="btn btn-xl btn-info btn-outline-light" href="{{ url_for('new_fight') }}">
             <i class="fas fa-bolt me-2"></i>
             Start new fight
         </a>
     </div>
+    {% if session['fight'] %}
     <div class="m-4 w-auto">
-        <a class="btn btn-xl btn-info btn-outline-light" href="/pokemon">
+        <a class="btn btn-xl btn-info btn-outline-light" href="{{ url_for('fight') }}">
+            <i class="fas fa-bolt me-2"></i>
+            Continue current fight
+        </a>
+    </div>
+    {% endif %}
+    <div class="m-4 w-auto">
+        <a class="btn btn-xl btn-info btn-outline-light" href="{{ url_for('pokemon') }}">
             <i class="fas fa-cat me-2"></i>
             Manage pokemon
         </a>
