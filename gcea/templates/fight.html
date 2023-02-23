@@ -28,4 +28,9 @@
             {% endfor %}
         </tbody>
     </table>
+<div id="controls" class="">
+    <div id="btn_attack" class="btn btn-xl btn-info btn-outline-light">Attack</div>
+    <a href="{{ url_for('pick_pokemon') }}" class="btn btn-xl btn-info btn-outline-light">Swap Pokemon</a>
+    <a href="{{ url_for('forfeit') }}" id="btn_forfeit" class="btn btn-xl btn-info btn-outline-light" onclick="return confirm('Are you sure to forfeit the fight?')">Forfeit</a>
+</div>
 {% endblock %}

@@ -65,9 +65,13 @@ class Engine():
             max_speed = 1.5*SPEEDCAP
             # Determine the next turn
             me = (max_speed - self.current.speed)
+
             op = (max_speed - self.opponent.speed)
             next_me = me - self.time % me
             next_op = op - self.time % op
+            # Bugfix: When me is 0 (for instance refresh on your turn), it is reset to maximum due to the modulo
+            if me == next_me:
+                next_me = 0
             # If opponent is next
             if next_op < next_me:
                 events.append(self.opponent_turn())
@@ -88,10 +92,15 @@ class Engine():
 
     def my_turn(self):
         dmg = calculate_attack(self.current.attack, self.opponent.defence)
+        new_events = []
         event = [self.time, f"Your {self.current.name} hits {self.opponent.name} for {dmg}.",""]
-        if self.update_hp(self.opponent, dmg):
+        new_events.append(event)
+        self.opponent_hp -= dmg
+        if self.opponent_hp <= 0:
             event[2] = f"Good job! You manage to beat {self.opponent.name}. Congratulations! :)"
-        return event
+        new_events = self.next_turn(new_events)
+        self.add_events(new_events)
+        return new_events
     def add_events(self, events):
         if self.events is None:
             self.events = []
@@ -103,6 +112,8 @@ class Engine():
 
 def calculate_attack(atk, dfc):
     lo_dmg = atk - dfc
+    # Make sure low bound is at least 1
+    lo_dmg = max(lo_dmg, 1)
     hi_dmg = atk
     dmg = 0
     if random() < (atk / (atk + dfc)):

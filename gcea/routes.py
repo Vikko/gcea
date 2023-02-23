@@ -1,5 +1,5 @@
 from random import choice
-from flask import render_template, flash, redirect, url_for, session
+from flask import render_template, flash, redirect, url_for, session, jsonify
 
 from gcea import app, db
 from gcea.engine import Engine
@@ -124,3 +124,21 @@ def fight():
     session['fight'] = fight.to_dict()
     events = fight.get_events()
     return render_template("fight.html", legend="Fight!", engine=fight, stats=stats, events=events)
+
+@app.route('/fight/forfeit')
+def forfeit():
+    session['fight'] = None
+    session['opponent'] = None
+    return redirect(url_for('index'))
+
+@app.route('/fight/attack')
+def attack():
+    fight = Engine(**session['fight'])
+    new_events = fight.my_turn()
+    stats = fight.get_stats()
+    session['fight'] = fight.to_dict()
+    return jsonify({
+        'events': new_events,
+        'current_hp': stats['current_hp'],
+        'opponent_hp': stats['opponent_hp']
+    })

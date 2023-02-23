@@ -21,5 +21,15 @@ function addEvent(battle_event) {
     cell1.appendChild(document.createElement('div').appendChild(document.createTextNode(battle_event[1])));
     cell2.appendChild(document.createElement('div').appendChild(document.createTextNode(battle_event[0])));
     cell3.appendChild(document.createElement('div').appendChild(document.createTextNode(battle_event[2])));
-
 }
+
+$(function() {
+    $('#btn_attack').on('click', function() {
+        $.getJSON('/fight/attack', function(data) {
+            $.each(data['events'], function(i,e) {
+                addEvent(e);
+            });
+        });
+        return false;
+    });
+});
