@@ -12,12 +12,12 @@
             </tr>
             <tr class="row">
                 <td class="col-1"/>
-                <td class="col-5"><div class="stats">HP: {{ stats.current_hp[0]}}/{{ stats.current_hp[1] }} ATK: {{ stats.current_ADS[0] }} DEF: {{ stats.current_ADS[1] }} SPD: {{ stats.current_ADS[2] }}</div></td>
+                <td class="col-5"><div class="stats">HP: <span id="current_hp">{{ stats.current_hp[0]}}/{{ stats.current_hp[1] }}</span> ATK: {{ stats.current_ADS[0] }} DEF: {{ stats.current_ADS[1] }} SPD: {{ stats.current_ADS[2] }}</div></td>
                 <td class="col-1"/>
-                <td class="col-5"><div class="stats">HP: {{ stats.opponent_hp[0]}}/{{ stats.opponent_hp[1] }} ATK: {{ stats.opponent_ADS[0] }} DEF: {{ stats.opponent_ADS[1] }} SPD: {{ stats.opponent_ADS[2] }}</div></td>
+                <td class="col-5"><div class="stats">HP: <span id="opponent_hp">{{ stats.opponent_hp[0]}}/{{ stats.opponent_hp[1] }}</span> ATK: {{ stats.opponent_ADS[0] }} DEF: {{ stats.opponent_ADS[1] }} SPD: {{ stats.opponent_ADS[2] }}</div></td>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="overflow-auto">
             {% for event in events %}
             <tr class="row">
                 <td class="col-1 text-end"><div>{{ event[0] }}</div></td>

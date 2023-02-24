@@ -29,7 +29,18 @@ $(function() {
             $.each(data['events'], function(i,e) {
                 addEvent(e);
             });
+            var current = data['current_hp'];
+            var opponent = data['opponent_hp'];
+            $('#current_hp').text(current[0]+'/'+current[1]);
+            $('#opponent_hp').text(opponent[0]+'/'+opponent[1]);
         });
         return false;
     });
+});
+
+$(document).ready(function () {
+  $('#fight').DataTable({
+    "scrollY": "150vh",
+    "scrollCollapse": true,
+  });
 });

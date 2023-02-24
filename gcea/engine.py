@@ -4,7 +4,7 @@
 from random import random, randrange, seed
 from gcea.models import Pokemon
 
-SPEEDCAP = 200  #
+SPEEDCAP = 100  #
 
 
 class Engine():
@@ -31,6 +31,9 @@ class Engine():
         self.time = time
 
     def to_dict(self):
+        """
+        Serialize object to a dict to store in a session
+        """
         return {
             'time': self.time,
             'current_id': self.current.id,
@@ -42,11 +45,17 @@ class Engine():
         }
 
     def update_current(self, pokemon_id):
+        """
+        Update stats relevant for battle after swapping current pokemon
+        """
         pokemon = Pokemon.query.get(pokemon_id)
         self.current = pokemon
         self.current_hp = pokemon.hp
 
     def get_stats(self):
+        """
+        Get stats of both pokemon in battle
+        """
         return {
             'current_name': self.current.name,
             'opponent_name': self.opponent.name,
@@ -56,7 +65,12 @@ class Engine():
             'opponent_ADS': [self.opponent.attack, self.opponent.defence, self.opponent.speed]
         }
 
-    def next_turn(self, events=None):
+    def next_turn(self, events=None, after_me=False):
+        """
+        Determine considering the time in battle and speed who's turn it is and call the opponents actions.
+        Returns set of events that happened between current and next turn
+        """
+
         #Setup events in case of non-recursive call
         if events is None:
             events = []
@@ -69,20 +83,22 @@ class Engine():
             op = (max_speed - self.opponent.speed)
             next_me = me - self.time % me
             next_op = op - self.time % op
-            # Bugfix: When me is 0 (for instance refresh on your turn), it is reset to maximum due to the modulo
-            if me == next_me:
-                next_me = 0
-            # If opponent is next
-            if next_op < next_me:
+            # If opponent is next or at the same turn and I already had my turn
+            if next_op < next_me or (next_op == next_me and after_me):
+                self.time += int(next_op)
                 events.append(self.opponent_turn())
-                self.time += next_op
-                events = self.next_turn(events)  # Recursive call in case of multiple turns before own turn
-            else:
-            # If I am is next
-                self.time += next_me
+                # Recursive call in case of multiple turns before own turn
+                events = self.next_turn(events)
+            elif next_op > next_me:
+                # If I am is next
+                self.time += int(next_me)
         return events
 
     def opponent_turn(self):
+        """
+        When the opponent has a turn, it always attacks
+        Returns the attack event.
+        """
         dmg = calculate_attack(self.opponent.attack, self.current.defence)
         event = [self.time, "", f"{self.opponent.name} hits your {self.current.name} for {dmg}."]
         self.current_hp -= dmg
@@ -91,6 +107,13 @@ class Engine():
         return event
 
     def my_turn(self):
+        """
+        On my turn, if not swapping or forfeiting the fight, attack the opponent.
+        After my turn, calls for the next turn(s) to be determined.
+        Returns events between my current and my next turn
+        """
+        if self.opponent_hp <= 0 or self.current_hp <= 0:
+            return []
         dmg = calculate_attack(self.current.attack, self.opponent.defence)
         new_events = []
         event = [self.time, f"Your {self.current.name} hits {self.opponent.name} for {dmg}.",""]
@@ -98,23 +121,33 @@ class Engine():
         self.opponent_hp -= dmg
         if self.opponent_hp <= 0:
             event[2] = f"Good job! You manage to beat {self.opponent.name}. Congratulations! :)"
-        new_events = self.next_turn(new_events)
+        new_events = self.next_turn(new_events, after_me=True)
         self.add_events(new_events)
         return new_events
     def add_events(self, events):
+        """
+        Adds a list of events to to the instance or initializes a new array
+        """
         if self.events is None:
             self.events = []
         for event in events:
             self.events.append(event)
 
     def get_events(self):
+        """
+        Returns all events stored in the instance
+        """
         return self.events
 
 def calculate_attack(atk, dfc):
-    lo_dmg = atk - dfc
+    """
+    Damage calculation considering attack and defence power.
+    Returns damage (int)
+    """
+    lo_dmg = int((atk - dfc)/4)
     # Make sure low bound is at least 1
     lo_dmg = max(lo_dmg, 1)
-    hi_dmg = atk
+    hi_dmg = int(atk/4)
     dmg = 0
     if random() < (atk / (atk + dfc)):
         # Attack success
