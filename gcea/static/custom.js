@@ -38,9 +38,10 @@ $(function() {
     });
 });
 
-$(document).ready(function () {
-  $('#fight').DataTable({
-    "scrollY": "150vh",
-    "scrollCollapse": true,
-  });
-});
+// Does not work
+//$(document).ready(function () {
+//  $('#fight').DataTable({
+//    "scrollY": "150vh",
+//    "scrollCollapse": true,
+//  });
+//});
